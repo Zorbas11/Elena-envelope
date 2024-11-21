@@ -63,6 +63,12 @@
       background: linear-gradient(135deg, #e74c3c, #c0392b);
     }
 
+    .choice-btn#show-restaurants-btn {
+      background: #27ae60;
+      color: black;
+      display: none;
+    }
+
     .response-message {
       font-size: 2em;
       margin-top: 20px;
@@ -184,6 +190,40 @@
       25% { transform: translateX(-5px); }
       75% { transform: translateX(5px); }
     }
+
+    .restaurant-list {
+      position: absolute;
+      top: 10%;
+      right: -100px;
+      transform: translate(0, 0);
+      background-color: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+      max-height: 80vh;
+      overflow-y: auto;
+      text-align: left;
+      font-size: 1.1em;
+      display: none;
+    }
+
+    .restaurant-list h2 {
+      margin-top: 0;
+    }
+
+    .restaurant-list ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    .restaurant-list li {
+      margin-bottom: 10px;
+    }
+
+    .restaurant-list .rating {
+      font-size: 0.8em;
+      color: #666;
+    }
   </style>
 </head>
 <body>
@@ -202,9 +242,26 @@
     <div class="buttons-container" id="buttons">
       <button class="choice-btn yes" onclick="handleChoice('yes')">Yes</button>
       <button class="choice-btn no" onclick="handleChoice('no')">No</button>
+      <button class="choice-btn" id="show-restaurants-btn" onclick="toggleRestaurantList()">Top 10 Restaurants</button>
     </div>
     
     <div class="response-message" id="response"></div>
+
+    <div class="restaurant-list" id="restaurant-list" onclick="toggleRestaurantList()">
+      <h2>Recommended Restaurants</h2>
+      <ul>
+        <li>Saint Restaurant - 4.4 ★ (2.6K reviews)</li>
+        <li>Chunky Chau Rosebank - 4.5 ★ (424 reviews)</li>
+        <li>Saigon Suzy Parkwood - 4.3 ★ (2.2K reviews)</li>
+        <li>Momo &O - 4.3 ★ (838 reviews)</li>
+        <li>Kong Sing - 4.4 ★ (577 reviews)</li>
+        <li>Momo Baohaus - 4.4 ★ (1.3K reviews)</li>
+        <li>Lotus Chinese Restaurant - 4.4 ★ (384 reviews)</li>
+        <li>Red Chamber - 4.4 ★ (497 reviews)</li>
+        <li>Yamitsuki Sushi Teppanyaki Dim Sum Bar - 4.6 ★ (2K reviews)</li>
+        <li>PRON - People's Republic of Noodles - 4.6 ★ (1.1K reviews)</li>
+      </ul>
+    </div>
   </div>
 
   <script>
@@ -220,7 +277,7 @@
     function createFloatingHeart() {
       const heart = document.createElement('div');
       heart.className = 'floating-heart';
-      heart.innerHTML = '🙌🏻 😁';
+      heart.innerHTML = '🤜🏻 😁';
       heart.style.left = Math.random() * window.innerWidth + 'px';
       heart.style.top = window.innerHeight + 'px';
       document.body.appendChild(heart);
@@ -229,12 +286,12 @@
 
     function handleChoice(choice) {
       const responseEl = document.getElementById('response');
-      document.getElementById('buttons').classList.remove('show');
       responseEl.classList.add('show');
 
       if (choice === 'yes') {
-        responseEl.innerHTML = " 🙌🏻 SUIII! OHHH YES 😁  🙌🏻";
+        responseEl.innerHTML = " 🤜🏻 SUIII! OHHH YES 😁  🤜🏻";
         responseEl.classList.remove('scary-message');
+        document.getElementById('show-restaurants-btn').style.display = 'inline-block';
         // Create many floating hearts
         for (let i = 0; i < 20; i++) {
           setTimeout(createFloatingHeart, i * 200);
@@ -243,6 +300,11 @@
         responseEl.innerHTML = "YOU HAVE NO CHOICE ELENA JACKSON 😡";
         responseEl.classList.add('scary-message');
       }
+    }
+
+    function toggleRestaurantList() {
+      const restaurantList = document.getElementById('restaurant-list');
+      restaurantList.style.display = restaurantList.style.display === 'block' ? 'none' : 'block';
     }
   </script>
 </body>
